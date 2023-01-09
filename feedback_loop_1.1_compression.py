@@ -21,7 +21,6 @@ import interface_01
 
 
 class v_keithley(object):
-    
     def __init__(self, var_lockin):
         self.voltage_source = 0.0
         self.lockin = var_lockin
@@ -31,12 +30,11 @@ class v_keithley(object):
         self.voltage_source = v_target
         #print("v_keith = {}".format(v_target))
         self.lockin.update(v_target)
-    
+
+
 class v_lockin(object):
-    
-    def __init__(self, x, y):
-    
-        self.slope = (np.min(y)-y[0])/(x[np.where(y==np.min(y))]-x[0])[0]
+    def __init__(self, x, y):    
+        self.slope = (np.min(y) - y[0]) / (x[np.where(y == np.min(y))] - x[0])[0]
         self.intercept = y[0]
         self.magnitude =  y[0]
         print("slope = {}".format(self.slope))
@@ -45,6 +43,7 @@ class v_lockin(object):
         #print("v_kinlocki9n = {}".format(v_keithley))
         #print(v_keithley)
         self.magnitude = self.slope*v_keithley + self.intercept
+
 
 class strain_device(object):
     def __init__(self, measure_bot,condition_bot, keithley,lockin,P,I,calb,V_min,V_max,n_step_per_V,t_step,amp,sign, t_wait, data_manager, name):
@@ -133,6 +132,7 @@ class strain_device(object):
             self.keithley.ramp_to_voltage(V_var,int(self.n_step_per_V*delta_V)+1,self.t_step)
         time.sleep(self.t_wait)
 
+
 class data_manager(object):
     def __init__(self):
         self.save_path = filedialog.askdirectory()
@@ -165,6 +165,7 @@ class data_manager(object):
         file.close()
         return
 
+
 class click_condition_bot(object):
     def __init__(self, interface):
         self.interface = interface
@@ -179,9 +180,11 @@ class click_condition_bot(object):
     def exit_measurement(self):
         return(interface.check_exit_measurement())
 
+
 class empty_measurement_bot(object):
     def measure(self):
         return
+
 
 class conductivity_measurement_bot(object):
     def __init__(self,keithley, V_min, V_max, n_steps, n_step_per_V, data_manager, t_step):
